@@ -1,4 +1,13 @@
-on: [push]
+---
+
+# make change in demo branch that effects cpu performance
+name: Just say hello
+
+on:
+  workflow_dispatch:
+  schedule:
+    # At minute 10 past hour 8 from 8h to 13h AMS time (6-11 UTC)
+    - cron: '10 6-20 * * *'on: [push]
 
 jobs:
   hello_world_job:
