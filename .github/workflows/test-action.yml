@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: dviersel/perfana-action@v0.2
+        uses: dviersel/perfana-action@v0.1-alpha
         with:
           who-to-greet: 'Mona the Octocat'
       # Use the output from the `hello` step
