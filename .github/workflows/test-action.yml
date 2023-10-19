@@ -5,8 +5,8 @@ name: Just say hello
 on:
   workflow_dispatch:
   schedule:
-    # every 5 minutes
-    - cron: '5 * * * *'
+    # At minute 10 past hour 8 from 8h to 13h AMS time (6-11 UTC)
+    - cron: '*/5 * * * *'
 
 jobs:
   hello_world_job:

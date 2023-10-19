@@ -26,21 +26,26 @@ jobs:
   performance-test-k6:
     runs-on: ${{ (inputs.runner == 'test') && fromJSON('["self-hosted", "test"]') ||  (inputs.runner == 'acme-0') && fromJSON('["self-hosted", "acme-0"]') || fromJSON('["self-hosted", "acme"]') }}
     steps:
+
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
         id: install
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+
       - name: Checkout afterburner repo
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - name: Get commit message
         if: inputs.annotations == ''
         run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")" >> $GITHUB_ENV
+
       - name: get KUBECONFIG from secrets
         env:
           KUBECONFIG_TO_FILE: ${{ (inputs.runner == 'test') && secrets.KUBECONFIG_TEST || secrets.KUBECONFIG_ACME }}
         run: echo "$KUBECONFIG_TO_FILE" | base64 --decode --ignore-garbage >> /runner/_work/afterburner/afterburner/config
+
       - name: Get deployed version
         if: env.TAG_NAME == ''
         env:
@@ -48,21 +53,25 @@ jobs:
         run: |
           VERSION=$(kubectl get deployment ${{ inputs.service }}-fe-afterburner -n acme -o jsonpath='{$.spec.template.spec.containers[:1].image}' | cut -d ":" -f 2) 
           echo "TAG_NAME=$VERSION" >> $GITHUB_ENV
+
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+
       - name: Setup Maven Action
         uses: s4u/setup-maven-action@v1.6.0
         with:
           java-version: 17
           maven-version: 3.6.3
+
       - name: get KUBECONFIG from secrets
         env:
           KUBECONFIG_TO_FILE: ${{ (inputs.runner == 'test') && secrets.KUBECONFIG_TEST || secrets.KUBECONFIG_ACME }}
         run: echo "$KUBECONFIG_TO_FILE" | base64 --decode --ignore-garbage >> /runner/_work/afterburner/afterburner/config
+
       - name: Install k6
         run: |
           sudo gpg -k
@@ -70,6 +79,7 @@ jobs:
           echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
           sudo apt-get update
           sudo apt-get install k6
+
 
       - name: Build with Maven
         env:

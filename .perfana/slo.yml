@@ -1,0 +1,22 @@
+#mvn clean install
+#
+#-U event-scheduler:test
+#-Ptest-env-demo,test-type-${{ inputs.workload }},assert-results
+#-f pom-k8s-job.xml \
+#-Dsut-config=${{ inputs.service }} \
+#-DtestRunId="${{ inputs.systemUnderTest }}-${{ github.job }}-${{ github.run_number }}-2" \
+#-DbuildResultsUrl="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+#-Dversion="${{ env.TAG_NAME }}" \
+#-DsystemUnderTest=${{ inputs.systemUnderTest }} \
+#-DtestEnvironment=acme \
+#-Dannotations="$COMMIT_MESSAGE" \
+#-DapiKey=${{ secrets.PERFANA_APIKEY }} \
+#-DtargetBaseUrl=http://${{ inputs.service }}-fe-afterburner.acme:8080 \
+#-DinfluxUrl=${{ (inputs.runner == 'test') && 'http://influxdb.perfana:8086' || 'https://influx.demo.perfana.cloud' }} \
+#-DinfluxUser=admin \
+#-DinfluxPassword=${{ secrets.INFLUXDB_PASSWORD }} \
+#-DelasticPassword=${{ secrets.ELASTIC_PASSWORD }} \
+#-DperfanaUrl=${{ (inputs.runner == 'test') && 'http://perfana-fe.perfana:3000' || 'https://demo.perfana.cloud' }}
+#
+
+perfana:

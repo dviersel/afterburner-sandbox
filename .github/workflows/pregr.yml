@@ -1,0 +1,34 @@
+---
+
+# make change in demo branch that effects cpu performance
+name: Performance Regression Test
+
+on:
+  workflow_dispatch:
+#  schedule:
+    # At minute 10 past hour 8 from 8h to 13h AMS time (6-11 UTC)
+#    - cron: '*/5 * * * *'
+
+jobs:
+  perf-regression-test:
+    runs-on: ubuntu-latest
+    name: Execute performance regression test
+    steps:
+      - name: Checkout code from code branch
+        uses: actions/checkout@v3
+        with:
+          path: main
+          fetch-depth: 0
+
+      - name: Hello world action step
+        id: hello
+        uses: dviersel/perfana-action@v0.1-alpha-0
+        with:
+          who-to-greet: 'Daniel'
+          config: '.perfana/slo.yml'
+
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
+
+
