@@ -20,7 +20,7 @@ jobs:
           path: main
           fetch-depth: 0
 
-      - name: Run Performance Test
+      - name: Run Performance Test with CPE
         id: perfana
         uses: dviersel/perfana-action@v0.1-alpha-0
         with:
