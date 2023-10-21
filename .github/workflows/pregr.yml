@@ -20,7 +20,7 @@ jobs:
           path: main
           fetch-depth: 0
 
-      - name: Hello world action step
+      - name: Run Performance Test
         id: perfana
         uses: dviersel/perfana-action@v0.1-alpha-0
         with:
