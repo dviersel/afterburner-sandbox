@@ -14,6 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Execute performance regression test
     steps:
+      - name: Enable debugging
+        id: debug
+        run: echo "::debug::My debug message"
+        
       - name: Checkout code from code branch
         uses: actions/checkout@v3
         with:
