@@ -1,0 +1,8 @@
+perfana:
+  system-under-test: mySuperComponent
+  owner: team_redcats
+  # The respository if not this
+#  repository:
+  run: fromPipeline
+#  run: fromOperator
+
