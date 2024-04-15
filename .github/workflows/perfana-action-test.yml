@@ -1,4 +1,7 @@
-on: [ push ]
+name: Perfana Action Test
+
+on:
+  workflow_dispatch:
 
 jobs:
   hello_world_job:
